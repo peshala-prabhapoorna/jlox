@@ -7,6 +7,8 @@ LOX_CLS := $(LOX_SRCS:$(SRC_DIR)/lox/%.java=$(BUILD_DIR)/%.class)
 TOOL_SRCS := $(wildcard $(SRC_DIR)/tool/*.java)
 TOOL_CLS := $(TOOL_SRCS:$(SRC_DIR)/tool/%.java=$(BUILD_DIR)/%.class)
 
+JAVA_OPTIONS := -Werror
+
 .PHONY: default
 
 default: $(LOX_CLS)
