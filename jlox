@@ -2,4 +2,6 @@
 
 # invoke jlox from different paths
 script_dir=$(dirname "$0")
-java -cp ${script_dir}/build lox.Lox
+# $@ allows you to pass argumens
+# eg. ./jlox arg1 "arg2" -> java ... arg1 "arg2"
+java -cp ${script_dir}/build lox.Lox $@
