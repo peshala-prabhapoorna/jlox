@@ -76,9 +76,27 @@ class Scanner {
             case '"': string(); break;
 
             default:
-                Lox.error(line, "Unexptected character.");
+                if (isDigit(c)) {
+                    number();
+                } else {
+                    Lox.error(line, "Unexptected character.");
+                }
                 break;
         }
+    }
+
+    private void number() {
+        while (isDigit(peak())) advance();
+
+        // Look for a fractional part.
+        if (peak() == '.' && isDigit(peakNext())) {
+            // Consume the "."
+            advance();
+
+            while (isDigit(peak())) advance();
+        }
+
+        addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
     }
 
     private void string() {
@@ -111,6 +129,15 @@ class Scanner {
     private char peak() {
         if (isAtEnd()) return '\0';
         return source.charAt(current);
+    }
+
+    private char peakNext() {
+        if (current + 1 >= source.length()) return '\0';
+        return source.charAt(current + 1);
+    }
+
+    private boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
     }
 
     private boolean isAtEnd() {
