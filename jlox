@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# invoke jlox from different paths
+script_dir=$(dirname "$0")
+java -cp ${script_dir}/build lox.Lox
