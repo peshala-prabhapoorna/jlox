@@ -2,6 +2,17 @@ package lox;
 
 class Interpreter implements Expr.Visitor<Object> {
     @Override
+    public Object visitConditionalExpr(Expr.Conditional expr) {
+        Object result = evaluate(expr.condition);
+
+        if ((boolean)result) {
+            return evaluate(expr.thenBranch);
+        } else {
+            return evaluate(expr.elseBranch);
+        }
+    }
+
+    @Override
     public Object visitGroupingExpr(Expr.Grouping expr) {
         return evaluate(expr.expression);
     }
