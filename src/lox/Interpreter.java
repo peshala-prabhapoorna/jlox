@@ -84,6 +84,8 @@ class Interpreter implements Expr.Visitor<Object> {
                 return (double)left / (double)right;
             case STAR:
                 return (double)left * (double)right;
+            case COMMA:
+                return right;
             case BANG_EQUAL: return !isEqual(left, right);
             case EQUAL_EQUAL: return isEqual(left, right);
         }
