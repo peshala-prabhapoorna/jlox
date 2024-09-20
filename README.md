@@ -5,6 +5,10 @@ Implementation of the interpreter follows guidelines provided by the book
 Robert Nystorm.
 ## grammar
 ```
+program        → statement* EOF ;
+statement      → exprStmt | printStmt ;
+exprStmt       → expression ";" ;
+printStmt      → "print" expression ";" ;
 expression     → comma ;
 comma          → conditional ( "," conditional )* ;
 conditional    → equality ( "?" expression ":" conditional )? ;
