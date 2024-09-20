@@ -22,7 +22,7 @@ abstract class Stmt{
     }
 
     static class Print extends Stmt {
-        Print(EXpr expression) {
+        Print(Expr expression) {
             this.expression = expression;
         }
 
@@ -31,7 +31,7 @@ abstract class Stmt{
            return visitor.visitPrintStmt(this);
         }
 
-        final EXpr expression;
+        final Expr expression;
     }
 
     abstract <R> R accept(Visitor<R> visitor);

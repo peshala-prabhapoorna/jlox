@@ -22,7 +22,7 @@ public class GenerateAst {
 
         defineAst(outputDir, "Stmt", Arrays.asList(
             "Expression : Expr expression",
-            "Print      : EXpr expression"
+            "Print      : Expr expression"
         ));
     }
 
