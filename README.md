@@ -5,8 +5,10 @@ Implementation of the interpreter follows guidelines provided by the book
 Robert Nystorm.
 ## grammar
 ```
-program        → statement* EOF ;
+program        → declaration* EOF ;
+declaration    → varDecl | statement ;
 statement      → exprStmt | printStmt ;
+varDecl        → "var" IDENTIFIER ("=" expression)? ";" ;
 exprStmt       → expression ";" ;
 printStmt      → "print" expression ";" ;
 expression     → comma ;
@@ -20,6 +22,7 @@ unary          → ( "!" | "-" ) unary
                | primary ;
 primary        → NUMBER | STRING | "true" | "false" | "nil"
                | "(" expression ")"
+               | IDENTIFIER
                // Error productions...
                | ( "!=" | "==" ) equality
                | ( ">" | ">=" | "<" | "<=" ) comparison
