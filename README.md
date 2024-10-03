@@ -7,7 +7,8 @@ Robert Nystorm.
 ```
 program        → declaration* EOF ;
 declaration    → varDecl | statement ;
-statement      → exprStmt | printStmt ;
+statement      → exprStmt | printStmt | block ;
+block          → "{" declaration* "}" ;
 varDecl        → "var" IDENTIFIER ("=" expression)? ";" ;
 exprStmt       → expression ";" ;
 printStmt      → "print" expression ";" ;
