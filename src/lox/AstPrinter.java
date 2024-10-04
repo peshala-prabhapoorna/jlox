@@ -1,3 +1,6 @@
+// this class is not used after printing syntax tree nodes
+// so, is excluded in the compilation stage (pom.xml)
+
 package lox;
 
 class AstPrinter implements Expr.Visitor<String> {

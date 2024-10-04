@@ -8,23 +8,73 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
     <build>
         <sourceDirectory>src</sourceDirectory>
+
         <plugins>
+            <!-- Maven Compiler Plugin to compile the tool and lox packages -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <id>compile-tool</id>
+                        <phase>generate-sources</phase> <!-- Compiles before the main compilation -->
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <source>21</source>
+                            <target>21</target>
+                            <includes>
+                                <include>tool/GenerateAst.java</include> <!-- Ensures the tool package is compiled -->
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin to execute GenerateAst.java -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-ast</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>tool.GenerateAst</mainClass>
+                            <arguments>
+                                <argument>src/lox</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Standard compilation for lox package -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <excludes>
+                        <exclude>**/AstPrinter.java</exclude> <!-- Exclude AstPrinter.java -->
+                    </excludes>
                     <compilerArgs>
                         <arg>-Werror</arg>
                     </compilerArgs>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
         </plugins>
