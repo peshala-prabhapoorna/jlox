@@ -6,6 +6,26 @@ import java.util.List;
 import static lox.TokenType.*;
 
 class Parser {
+    private boolean allowExpression;
+    private boolean foundExpression = false;
+
+    Object parseRepl() {
+        allowExpression = true;
+        List<Stmt> statements = new ArrayList<>();
+        while (!isAtEnd()) {
+            statements.add(declaration());
+
+            if (foundExpression) {
+                Stmt last = statements.get(statements.size() - 1);
+                return ((Stmt.Expression) last).expression;
+            }
+
+            allowExpression = false;
+        }
+
+        return statements;
+    }
+
     List<Stmt> parse() {
         List<Stmt> statements = new ArrayList<>();
         while (!isAtEnd()) {
@@ -66,7 +86,12 @@ class Parser {
 
     private Stmt expressionStatement() {
         Expr expr = expression();
-        consume(SEMICOLON, "Expect ';' after expression.");
+        
+        if (allowExpression && isAtEnd()) {
+            foundExpression = true;
+        } else {
+            consume(SEMICOLON, "Expect ';' after expression.");
+        }
         return new Stmt.Expression(expr);
     }
 
