@@ -3,6 +3,7 @@ Interpreter for the Lox programming language implemented in Java.
 Implementation of the interpreter follows guidelines provided by the book  
 [Crafting Interpreters](https://craftinginterpreters.com/) written by  
 Robert Nystorm.
+![jlox - sta](https://github.com/user-attachments/assets/9255e8e1-200d-45d4-a796-716c4e079cbe)
 ## grammar
 ```
 program        → declaration* EOF ;
