@@ -8,10 +8,11 @@ Robert Nystorm.
 ```
 program        → declaration* EOF ;
 declaration    → varDecl | statement ;
-statement      → exprStmt | printStmt | block ;
+statement      → exprStmt | ifStmt | printStmt | block ;
 block          → "{" declaration* "}" ;
-varDecl        → "var" IDENTIFIER ("=" expression)? ";" ;
+varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 exprStmt       → expression ";" ;
+ifStmt         → "if" "(" expression ")" statement ( "else" statement )? ;
 printStmt      → "print" expression ";" ;
 expression     → assignment ;
 assignment     → IDENTIFIER "=" assignment | comma ;
