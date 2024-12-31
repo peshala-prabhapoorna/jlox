@@ -152,7 +152,7 @@ class Parser {
     }
 
     private Expr conditional() {
-        Expr expr = equality();
+        Expr expr = or();
 
         while (match(QUESTION)) {
             Expr thenBranch = expression();
@@ -162,6 +162,30 @@ class Parser {
             );
             Expr elseBranch = conditional();
             expr = new Expr.Conditional(expr, thenBranch, elseBranch);
+        }
+
+        return expr;
+    }
+
+    private Expr or() {
+        Expr expr = and();
+
+        while (match(OR)) {
+            Token operator = previous();
+            Expr right = and();
+            expr = new Expr.Logical(expr, operator, right);
+        }
+
+        return expr;
+    }
+
+    private Expr and() {
+        Expr expr = equality();
+
+        while (match(AND)) {
+            Token operator = previous();
+            Expr right = equality();
+            expr = new Expr.Logical(expr, operator, right);
         }
 
         return expr;
