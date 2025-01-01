@@ -8,12 +8,13 @@ Robert Nystorm.
 ```
 program        → declaration* EOF ;
 declaration    → varDecl | statement ;
-statement      → exprStmt | ifStmt | printStmt | block ;
+statement      → exprStmt | ifStmt | printStmt | whileStmt | block ;
 block          → "{" declaration* "}" ;
 varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 exprStmt       → expression ";" ;
 ifStmt         → "if" "(" expression ")" statement ( "else" statement )? ;
 printStmt      → "print" expression ";" ;
+whileStmt      → "while" "(" expression ")" statement ;
 expression     → assignment ;
 assignment     → IDENTIFIER "=" assignment | comma ;
 comma          → conditional ( "," conditional )* ;
