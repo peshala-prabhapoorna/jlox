@@ -1,0 +1,5 @@
+var i = 0;
+while (i < 15) {
+    print "dong " + i;
+    i = i + 1;
+}
