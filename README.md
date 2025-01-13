@@ -41,7 +41,15 @@ mvn compile
 ```
 program        → declaration* EOF ;
 declaration    → varDecl | statement ;
-statement      → exprStmt | ifStmt | printStmt | whileStmt | block ;
+statement      → exprStmt
+                | forStmt
+                | ifStmt
+                | printStmt
+                | whileStmt
+                | block ;
+forStmt        → "for" "(" ( varDecl | exprStmt | ";")
+                expression? ";"
+                expression? ")" statement ;
 block          → "{" declaration* "}" ;
 varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 exprStmt       → expression ";" ;
