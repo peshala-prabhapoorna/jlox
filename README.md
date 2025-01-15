@@ -28,12 +28,18 @@ cd jlox
 
 3. Build the interpreter
 ```bash
-mvn compile
+mvn clean compile
 ```
 
 4. Run the interpreter
 ```bash
 ./jlox
+```
+
+### Build Jar File
+
+```bash
+mvn clean compile package
 ```
 
 ## grammar
