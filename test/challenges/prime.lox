@@ -1,0 +1,9 @@
+fun isPrime(n) {
+  if (n <= 1) return false;
+  for (var i = 2; i <= n / 2; i = i + 1) {
+    if (n - (n / i) * i == 0) return false;  // Simulate modulo
+  }
+  return true;
+}
+print isPrime(7);  // Output: true
+print isPrime(4);  // Output: false
