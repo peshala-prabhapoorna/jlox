@@ -46,35 +46,51 @@ mvn clean compile package
 
 ```
 program        → declaration* EOF ;
-declaration    → varDecl | statement ;
+
+>>>Declarations
+declaration    → funDecl
+                | varDecl
+                | statement ;
+
+funDecl        → "fun" function ;
+varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
+<<<
+
+>>>Statements
 statement      → exprStmt
                 | forStmt
                 | ifStmt
                 | printStmt
                 | whileStmt
                 | block ;
+
+exprStmt       → expression ";" ;
 forStmt        → "for" "(" ( varDecl | exprStmt | ";")
                 expression? ";"
                 expression? ")" statement ;
 block          → "{" declaration* "}" ;
-varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 exprStmt       → expression ";" ;
 ifStmt         → "if" "(" expression ")" statement ( "else" statement )? ;
 printStmt      → "print" expression ";" ;
 whileStmt      → "while" "(" expression ")" statement ;
-expression     → assignment ;
-assignment     → IDENTIFIER "=" assignment | comma ;
-comma          → conditional ( "," conditional )* ;
+<<<
+
+>>>Expressions
+expression     → comma ;
+
+comma          → assignment ( "," assignment )* ;
+assignment     → IDENTIFIER "=" assignment | conditional ;
 conditional    → logic_or ( "?" expression ":" conditional )? ;
+
 logic_or       → logic_and ( "or" logic_and )* ;
 logic_and      → equality ( "and" equality )* ;
 equality       → comparison ( ( "!=" | "==" ) comparison )* ;
 comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
 term           → factor ( ( "-" | "+" ) factor )* ;
 factor         → unary ( ( "/" | "*" ) unary )* ;
+
 unary          → ( "!" | "-" ) unary | call ;
 call           → primary ( "(" arguments? ")" )* ;
-arguments      → expression ( "," expression )* ;
 primary        → NUMBER | STRING | "true" | "false" | "nil"
                | "(" expression ")"
                | IDENTIFIER
@@ -83,4 +99,11 @@ primary        → NUMBER | STRING | "true" | "false" | "nil"
                | ( ">" | ">=" | "<" | "<=" ) comparison
                | ( "+" ) term
                | ( "/" | "*" ) factor ;
+<<<
+
+>>>Utility Rules
+function       → IDENTIFIER "(" parameters? ")" block ;
+parameters     → IDENTIFIER ( "," IDENTIFIER )* ;
+arguments      → expression ( "," expression )* ;
+<<<
 ```
