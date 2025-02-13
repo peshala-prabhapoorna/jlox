@@ -46,7 +46,7 @@ class Parser {
     }
 
     private Expr expression() {
-        return assignment();
+        return comma();
     }
 
     private Stmt declaration() {
@@ -196,8 +196,20 @@ class Parser {
         return statements;
     }
 
+    private Expr comma() {
+        Expr expr = assignment();
+
+        while (match(COMMA)) {
+            Token operator = previous();
+            Expr right = assignment();
+            expr = new Expr.Binary(expr, operator, right);
+        }
+
+        return expr;
+    }
+
     private Expr assignment() {
-        Expr expr = comma();
+        Expr expr = conditional();
 
         if (match(EQUAL)) {
             Token equals = previous();
@@ -209,18 +221,6 @@ class Parser {
             }
 
             error(equals, "Invalid assignment target.");
-        }
-
-        return expr;
-    }
-
-    private Expr comma() {
-        Expr expr = conditional();
-
-        while (match(COMMA)) {
-            Token operator = previous();
-            Expr right = conditional();
-            expr = new Expr.Binary(expr, operator, right);
         }
 
         return expr;
@@ -331,7 +331,7 @@ class Parser {
                 if (arguments.size() >= 255) {
                     error(peek(), "Can't have more than 255 arguments.");
                 }
-                arguments.add(conditional());
+                arguments.add(assignment());
             } while (match(COMMA));
         }
 
