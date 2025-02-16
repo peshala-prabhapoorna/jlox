@@ -28,6 +28,15 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitFunctionStmt(Stmt.Function stmt) {
+        declare(stmt.name);
+        define(stmt.name);
+
+        resolveFunction(stmt);
+        return null;
+    }
+
+    @Override
     public Void visitVarStmt(Stmt.Var stmt) {
         declare(stmt.name);
         if (stmt.initializer != null) {
@@ -66,6 +75,16 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     private void resolve(Expr expr) {
         expr.accept(this);
+    }
+
+    private void resolveFunction(Stmt.Function function) {
+        beginScope();
+        for (Token param: function.params) {
+            declare(param);
+            define(param);
+        }
+        resolve(function.body);
+        endScope();
     }
 
     private void beginScope() {
