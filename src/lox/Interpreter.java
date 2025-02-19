@@ -98,14 +98,16 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        Object value = environment.get(expr.name);
-        if (value == uninitialized) {
-            throw new RuntimeError(
-                expr.name,
-                "Variable must be initialized before use."
-            );
+        return lookUpVariable(expr.name, expr);
+    }
+
+    private Object lookUpVariable(Token name, Expr expr) {
+        Integer distance = locals.get(expr);
+        if (distance != null) {
+            return environment.getAt(distance, name.lexeme);
+        } else {
+            return globals.get(name);
         }
-        return value;
     }
 
     private void checkNumberOperand(Token operator, Object operand) {
