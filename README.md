@@ -48,10 +48,12 @@ mvn clean compile package
 program        → declaration* EOF ;
 
 >>>Declarations
-declaration    → funDecl
+declaration    → classDecl
+                | funDecl
                 | varDecl
                 | statement ;
 
+classDecl      → "class" IDENTIFIER "{" function* "}" ;
 funDecl        → "fun" function ;
 varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 <<<
@@ -81,7 +83,8 @@ whileStmt      → "while" "(" expression ")" statement ;
 expression     → comma ;
 
 comma          → assignment ( "," assignment )* ;
-assignment     → IDENTIFIER "=" assignment | conditional ;
+assignment     → ( call "." )? IDENTIFIER "=" assignment
+               | logic_or ;
 conditional    → logic_or ( "?" expression ":" conditional )? ;
 
 logic_or       → logic_and ( "or" logic_and )* ;
@@ -92,7 +95,7 @@ term           → factor ( ( "-" | "+" ) factor )* ;
 factor         → unary ( ( "/" | "*" ) unary )* ;
 
 unary          → ( "!" | "-" ) unary | call ;
-call           → primary ( "(" arguments? ")" )* ;
+call           → primary ( "(" arguments? ")" | "." IDENTIFIER )* ;
 primary        → NUMBER | STRING | "true" | "false" | "nil"
                | "(" expression ")"
                | IDENTIFIER
