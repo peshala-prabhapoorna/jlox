@@ -1,0 +1,1 @@
+class Oops < Oops {} // Print error log: can't inherit from itself
