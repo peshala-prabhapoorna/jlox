@@ -42,6 +42,44 @@ mvn clean compile
 mvn clean compile package
 ```
 
+## Docker
+
+You can also run jlox in a Docker container.
+
+### Building the Docker Image
+
+First, build the project locally:
+```bash
+mvn clean compile
+```
+
+Then build the Docker image:
+```bash
+docker build -t jlox:latest .
+```
+
+### Running jlox in Docker
+
+Run the REPL (interactive mode):
+```bash
+docker run -it jlox:latest
+```
+
+Run a Lox script by piping input:
+```bash
+echo 'print "Hello from Docker!";' | docker run -i jlox:latest
+```
+
+Run a Lox script file:
+```bash
+docker run -i jlox:latest < script.lox
+```
+
+Or mount a volume to access script files:
+```bash
+docker run -v $(pwd):/scripts jlox:latest /scripts/script.lox
+```
+
 ## grammar
 
 ```

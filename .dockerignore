@@ -1,0 +1,23 @@
+# Git files
+.git
+.gitignore
+
+# Build artifacts (keeping target/classes for the image)
+build/
+
+# Maven wrapper
+.mvn/
+
+# IDE files
+.project
+.settings
+.classpath
+.idea
+*.iml
+
+# Documentation
+README.md
+LICENSE
+
+# Test files (optional - comment out if you want to include tests in the image)
+test/
